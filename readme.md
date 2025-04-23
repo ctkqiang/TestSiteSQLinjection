@@ -1,127 +1,127 @@
-# TestSiteSQLinjection
+# SQL注入测试站点
 
-> A deliberately vulnerable web application designed for teaching SQL injection techniques. This project provides a simple login page with known SQL injection vulnerabilities for educational purposes.
+> 这是一个专门设计用于教学SQL注入技术的易受攻击的Web应用程序。该项目提供了一个具有已知SQL注入漏洞的简单登录页面，用于教育目的。
 
-⚠️ **WARNING:** This application is intentionally vulnerable and is meant for educational use only. DO NOT deploy this in any production environment.
-
----
-
-## Overview
-
-This project simulates a basic login page with intentional SQL injection vulnerabilities, helping students and professionals learn about:
-
-- Basic SQL injection techniques
-- SQLMap usage
-- Web application security testing
-- Database exploitation
+⚠️ **警告：** 此应用程序是故意设置漏洞的，仅用于教育用途。请勿在任何生产环境中部署此应用。
 
 ---
 
-## Prerequisites
+## 概述
 
-To run this project, ensure the following are installed:
+本项目模拟了一个具有故意SQL注入漏洞的基础登录页面，帮助学生和专业人士学习：
 
-- PHP 7.0 or higher
+- 基本的SQL注入技术
+- SQLMap的使用
+- Web应用安全测试
+- 数据库利用
+
+---
+
+## 前置要求
+
+运行此项目需要安装以下软件：
+
+- PHP 7.0或更高版本
 - SQLite3
-- Python 3.x (for SQLMap)
+- Python 3.x（用于SQLMap）
 - SQLMap
 
 ---
 
-## Installation
+## 安装
 
-1. Clone the repository:
+1. 克隆仓库：
 
    ```bash
    git clone https://github.com/ctkqiang/TestSiteSQLinjection.git
    cd TestSiteSQLinjection
    ```
 
-2. Initialize the database:
+2. 初始化数据库：
 
    ```sql
-   -- The following SQL will be automatically executed on the first run
+   -- 首次运行时将自动执行以下SQL
    CREATE TABLE IF NOT EXISTS users (
        id INTEGER PRIMARY KEY,
        username TEXT,
        password TEXT
    );
 
-   -- Sample user data is pre-populated
-   -- Including admin and regular user accounts
+   -- 已预先填充示例用户数据
+   -- 包括管理员和普通用户账户
    ```
 
 ---
 
-## Running the Application
+## 运行应用
 
-1. Start the PHP development server:
+1. 启动PHP开发服务器：
 
    ```bash
    php -S 0.0.0.0:3000
    ```
 
-2. Access the application:
+2. 访问应用：
 
-   - Open your browser and navigate to `http://localhost:3000`
-   - The login page will be displayed
+   - 打开浏览器并访问 `http://localhost:3000`
+   - 将显示登录页面
 
 ---
 
-## Testing SQL Injection
+## SQL注入测试
 
-### Manual Testing
+### 手动测试
 
-Try these SQL injection payloads to explore vulnerabilities:
+尝试这些SQL注入载荷来探索漏洞：
 
-1. **Basic authentication bypass:**
+1. **基本认证绕过：**
 
    ```sql
    ' OR '1'='1
    ```
 
-2. **UNION-based injection:**
+2. **基于UNION的注入：**
 
    ```sql
    ' UNION SELECT username, password, id FROM users--
    ```
 
-3. **Comment-based bypass:**
+3. **基于注释的绕过：**
 
    ```sql
    admin'--
    ```
 
-### Automated Testing with SQLMap
+### 使用SQLMap进行自动化测试
 
-Run SQLMap to automate SQL injection testing:
+运行SQLMap来自动化SQL注入测试：
 
 ```bash
 python3 sqlmap.py -u "http://localhost:3000/index.php" --data="username=admin&password=' OR 1=1--" --dbms=sqlite --dump
 ```
 
-**SQLMap Parameters Explained:**
+**SQLMap参数说明：**
 
-- `-u`: Target URL
-- `--data`: POST data with injection points
-- `--dbms`: Specify database type (SQLite)
-- `--dump`: Retrieve database contents
-
----
-
-## Success Indicators
-
-When successfully exploited, the application will:
-
-1. Log "hacked" to the browser console
-2. Display retrieved user information
-3. Show successful login messages
+- `-u`：目标URL
+- `--data`：带注入点的POST数据
+- `--dbms`：指定数据库类型（SQLite）
+- `--dump`：获取数据库内容
 
 ---
 
-## Database Structure
+## 成功指标
 
-The application uses SQLite with the following schema:
+当成功利用漏洞时，应用程序将：
+
+1. 在浏览器控制台记录"hacked"
+2. 显示检索到的用户信息
+3. 显示成功登录消息
+
+---
+
+## 数据库结构
+
+应用程序使用SQLite，其架构如下：
 
 ```sql
 users
@@ -130,57 +130,57 @@ users
 └── password (TEXT)
 ```
 
-The database is pre-populated with test accounts, including:
+数据库预先填充了测试账户，包括：
 
-- **Regular Users:** john.doe, jane.smith, etc.
-- **Admin Users:** admin/admin123, admin/secretpass123
-
----
-
-## Security Notice
-
-This application contains intentional vulnerabilities, such as:
-
-- Unescaped SQL queries
-- Direct user input in SQL statements
-- Plain text password storage
-- No input sanitization
-
-**DO NOT:**
-
-- Use this code in production
-- Deploy this on a public server
-- Use real credentials or sensitive data
+- **普通用户：** john.doe, jane.smith等
+- **管理员用户：** admin/admin123, admin/secretpass123
 
 ---
 
-## Educational Goals
+## 安全提示
 
-By using this project, you will learn:
+此应用程序包含故意的漏洞，例如：
 
-1. How SQL injection vulnerabilities occur
-2. Methods to identify SQL injection points
-3. Using automated tools for security testing
-4. Understanding database structure through exploitation
-5. The importance of proper input sanitization
+- 未转义的SQL查询
+- SQL语句中直接使用用户输入
+- 明文密码存储
+- 无输入净化
 
----
+**禁止：**
 
-## Contributing
-
-Contributions are welcome! You can help by:
-
-- Adding new vulnerabilities for testing
-- Improving documentation
-- Creating additional learning resources
-- Adding more test cases
+- 在生产环境中使用此代码
+- 在公共服务器上部署
+- 使用真实凭据或敏感数据
 
 ---
 
-### Want to Hack Like a Pro?
+## 教育目标
 
-🚀 I've distilled 10 years of expertise into one powerful eBook. Learn advanced techniques, practical examples, and step-by-step commands to master SQL injection with SQLMap.
+通过使用此项目，你将学习：
 
-[Purchase Now](https://ko-fi.com/s/5ad8a06662) and start your journey today!
+1. SQL注入漏洞如何产生
+2. 识别SQL注入点的方法
+3. 使用自动化工具进行安全测试
+4. 通过利用漏洞理解数据库结构
+5. 正确输入净化的重要性
 
-#sqlinjection #hacking #cybersecurity #ethicalhacking #ebook
+---
+
+## 贡献
+
+欢迎贡献！你可以通过以下方式帮助：
+
+- 添加新的测试漏洞
+- 改进文档
+- 创建额外的学习资源
+- 添加更多测试用例
+
+---
+
+### 想成为黑客高手？
+
+🚀 我已将10年的专业知识浓缩成一本强大的电子书。学习高级技术、实际示例和分步命令，掌握使用SQLMap进行SQL注入的技巧。
+
+[立即购买](https://ko-fi.com/s/5ad8a06662)，开启你的学习之旅！
+
+#SQL注入 #黑客 #网络安全 #道德黑客 #电子书
