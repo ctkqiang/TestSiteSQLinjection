@@ -118,7 +118,7 @@ CREATE TABLE IF NOT EXISTS users (
 
 ### 🧐 **核心教学（质疑一切"安全"）**
 
-虽然 `index.php` 和 `dashboard.php` **表面上使用了预处理语句**，但是妳要学会质疑：
+虽然 `index.php` 和 `dashboard.php` **表面上使用了预处理语句**，但是妳学会质疑：
 
 - 真的防住了吗？
 - 有没有漏掉的细节？
@@ -153,6 +153,10 @@ $stmt = $pdo->query($sql);
 ```
 
 然后再打，就能轻松注入爆破了。👾
+
+---
+
+> 🎬 推荐视频：想更直观了解SQL注入与SqlMap实战？强烈推荐B站视频：[揭秘！从黑客视角看数据泄露，SqlMap 竟如此神通广大！](https://b23.tv/54kEk8o)
 
 ---
 
